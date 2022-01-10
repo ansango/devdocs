@@ -11,9 +11,9 @@ En esta sección encontrarás recursos para ir directos al grano, las chuletas t
 ## Chuletas
 
 - [DevHints](https://devhints.io/)
-- [Javascript](/blog/chuletas/javascript)
-- [Javascript Array](/blog/chuletas/javascript-array)
-- [MongoDB](/blog/chuletas/mongo)
+- <a href="/chuletas/javascript" target="_blank" rel="noopener noreferrer">Javascript</a>
+- <a href="/chuletas/javascript-array" target="_blank" rel="noopener noreferrer">Javascript Array</a>
+- <a href="/chuletas/mongo" target="_blank" rel="noopener noreferrer">MongoDB</a>
 - [React Typescript Cheatsheets](https://react-typescript-cheatsheet.netlify.app/)
 - [Tailwind Cheat Sheet](https://nerdcave.com/tailwind-cheat-sheet)
 - [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
