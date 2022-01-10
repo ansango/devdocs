@@ -6,31 +6,31 @@ slug: /
 
 # Hola! 👋
 
-Esta es la documentación de **[ansango.com](https://www.ansango.com)**
+Esta es la **documentación** de **[ansango.com](https://www.ansango.com)**
 
-Aquí podrás encontrar algunas soluciones que he ido recopilando a lo largo de mi carrera como Frontend Developer (esperemos que dentro de poco Frontend Engineer).
+Aquí podrás encontrar algunas **soluciones** que he ido recopilando a lo largo de mi carrera como **Frontend Developer** (esperemos que dentro de poco Frontend Engineer).
 
 Documentar es un peñazo, pero no vine mal recordar cómo implementamos soluciones.
 
-Espero que esta pequeña wiki te sea tan útil como lo es para mi.
+Espero que esta pequeña wiki te sea tan útil como lo es para mi. 😄
 
-## Continúa leyéndome
+## Continúa leyéndome 📖
 
 Puedes leer algunos de mis artículos en **[ansango.com](https://ansango.com)**
 
 Este es mi sitio personal, donde encontrarás diversos artículos sobre el desarrollo web y tecnología en general.
 
-## ¿Dónde encontrarme?
+## ¿Dónde encontrarme? 🗺️
 
 Puedes encontrarme a través de:
 
-- [GitHub](https://github.com/ansango) - ansango
-- [Mail](mailto:anibalsantosgo@gmail.com) - anibalsantosgo.com
-- [Linkedin](https://www.linkedin.com/in/ansango/) - Aníbal Santos Gómez
+- **[GitHub](https://github.com/ansango) - ansango**
+- **[Mail](mailto:anibalsantosgo@gmail.com) - anibalsantosgo.com**
+- **[Linkedin](https://www.linkedin.com/in/ansango/) - Aníbal Santos Gómez**
 
 Si tienes cualquier duda, ya sabes!
 
-## ¡Colabora!
+## ¡Colabora! ⌨️
 
 Puedes colaborar en cada entrada de esta wiki, dándole al enlace que tienes más abajo **(Editar esta página)**
 
