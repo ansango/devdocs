@@ -7,25 +7,27 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "ansango docs",
-  tagline: "Dinosaurs are cool",
+  tagline: "Dev Docs are cool",
   url: "https://your-docusaurus-test-site.com",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "facebook", // Usually your GitHub org/user name.
-  projectName: "docusaurus", // Usually your repo name.
+  organizationName: "ansango", // Usually your GitHub org/user name.
+  projectName: "dev docs", // Usually your repo name.
+  i18n: {
+    defaultLocale: "es",
+    locales: ["es"],
+  },
   plugins: [
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
-        // ... Your options.
-        // `hashed` is recommended as long-term-cache of index file is possible.
         hashed: true,
-
-        // For Docs using Chinese, The `language` is recommended to set to:
-        // ```
-        language: ["es"],
+        language: "es",
+        docsRouteBasePath: "/",
+        docsDir: "docs",
+        highlightSearchTermsOnTargetPage: true,
         translations: {
           search_placeholder: "Buscar",
           see_all_results: "Ver todos los resultados",
@@ -36,8 +38,6 @@ const config = {
           count_documents_found_plural: "{{ count }} documentos encontrados",
           no_documents_were_found: "No se encontraron documentos",
         },
-        // ```
-        // When applying `zh` in language, please install `nodejieba` in your project.
       },
     ],
   ],
@@ -47,18 +47,13 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: "/",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           editUrl:
             "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-        },
+        blog: false,
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -97,7 +92,7 @@ const config = {
             items: [
               {
                 label: "Docs",
-                to: "/docs/intro",
+                to: "/",
               },
             ],
           },
@@ -121,10 +116,6 @@ const config = {
           {
             title: "More",
             items: [
-              {
-                label: "Blog",
-                to: "/blog",
-              },
               {
                 label: "GitHub",
                 href: "https://github.com/facebook/docusaurus",

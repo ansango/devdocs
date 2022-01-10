@@ -1,35 +1,41 @@
 ---
+id: intro
 sidebar_position: 1
+slug: /
 ---
 
-# Tutorial Intro
+# Hola! 👋
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Esta es la documentación de **[ansango.com](https://www.ansango.com)**
 
-## Getting Started
+Aquí podrás encontrar algunas soluciones que he ido recopilando a lo largo de mi carrera como Frontend Developer (esperemos que dentro de poco Frontend Engineer).
 
-Get started by **creating a new site**.
+Documentar es un peñazo, pero no vine mal recordar cómo implementamos soluciones.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+Espero que esta pequeña wiki te sea tan útil como lo es para mi.
 
-## Generate a new site
+## Continúa leyéndome
 
-Generate a new Docusaurus site using the **classic template**:
+Puedes leer algunos de mis artículos en **[ansango.com](https://ansango.com)**
 
-```shell
-npm init docusaurus@latest my-website classic
-```
+Este es mi sitio personal, donde encontrarás diversos artículos sobre el desarrollo web y tecnología en general.
 
-## Start your site
+## ¿Dónde encontrarme?
 
-Run the development server:
+Puedes encontrarme a través de:
 
-```shell
-cd my-website
+- [GitHub](https://github.com/ansango) - ansango
+- [Mail](mailto:anibalsantosgo@gmail.com) - anibalsantosgo.com
+- [Linkedin](https://www.linkedin.com/in/ansango/) - Aníbal Santos Gómez
 
-npx docusaurus start
-```
+Si tienes cualquier duda, ya sabes!
 
-Your site starts at `http://localhost:3000`.
+## ¡Colabora!
 
-Open `docs/intro.md` and edit some lines: the site **reloads automatically** and displays your changes.
+Puedes colaborar en cada entrada de esta wiki, dándole al enlace que tienes más abajo **(Editar esta página)**
+
+Con ello mejoraremos juntos toda esta información.
+
+Siéntete libre de hacer fork del proyecto y corregir aquello que consideres inexacto.
+
+❤️
