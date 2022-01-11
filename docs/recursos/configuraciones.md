@@ -8,15 +8,13 @@ sidebar_position: 1
 
 En lo personal prefiero trabajar con Linux, en concreto con la distribución de **[Ubuntu](https://ubuntu.com/)**.
 
-En el trabajo utilizo Windows, y en el pasado utilizaba MacOS.
-
-He pasado por los tres sistemas y desde luego todos los recursos que publico, exceptuando los que son específicos para Linux o Ubuntu, están disponibles para todos o casi todos los sistemas.
+Todos los recursos que publicados, exceptuando los que son específicos para Linux o Ubuntu, están disponibles para todos o casi todos los sistemas.
 
 ### Linux
 
-- **<a href="/linux/configurar-ubuntu" target="_blank" rel="noopener noreferrer">Configurar Ubuntu 20.04 / 21.04</a>**
-- **[Restaurar Wireless](https://askubuntu.com/questions/1182722/intel-wireless-ac-9462-not-working-w-18-04-lts)**
-- **<a href="/linux/touchpad" target="_blank" rel="noopener noreferrer">Restaurar Tochpad</a>**
+- **<a href="/linux/configurar-ubuntu" target="_blank" rel="noopener noreferrer">Configurar Ubuntu 20.04 / 21.04</a>** - Cómo **poner a punto** tu distro.
+- **[Restaurar Wireless](https://askubuntu.com/questions/1182722/intel-wireless-ac-9462-not-working-w-18-04-lts)** - Por si te falla el **wifi**.
+- **<a href="/linux/touchpad" target="_blank" rel="noopener noreferrer">Restaurar Tochpad</a>** - Por si te falla el **touchpad**.
 
 ## Terminal
 
@@ -30,31 +28,29 @@ Aquí tienes una guía de `Bash` y también un artículo con los comandos más u
 
 ## Navegadores
 
-Otra elección muy personal. La verdad es que me encanta Firefox y tiene unas herramientas que nos ayudan a maquetar y a desarrollar muy intuitivas, pero no te voy a engañar, utilizo Chrome por defecto, vendo consejos que para mi no tengo. Ambos navegadores tienen practicamente las mismas extensiones disponibles, así que elige el que más te guste.
+**Firefox** tiene unas herramientas que nos ayudan a maquetar y a desarrollar muy intuitivas, pero tanto Firefox como **Chrome** tienen prácticamente las mismas extensiones disponibles, así que elige el que más te guste.
 
 - **[Chrome](https://www.google.com/chrome/)**
 - **[Firefox Developer Edition](https://www.mozilla.org/en-US/firefox/developer/)**
 
 ### Extensiones
 
-- **[Clear Cache](https://chrome.google.com/webstore/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn?hl=en)** - Borra la caché y los datos de navegación con un solo click.
-- **[ColorZilla](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp?hl=en)** - Selector de colores, generador de degradados y otras cosas.
-- **[JSON Viewer](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh?hl=en)** - Highlighter para JSON.
-- **[Lighthouse](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en)** - Herramienta para mejorar rendimiento, calidad y corrección de tu web.
-- **[Wappalyzer](https://www.google.com/chrome/)** - ¿Quieres saber que tecnologías usa esta web?
-- **[Octotree](https://chrome.google.com/webstore/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc?hl=en)** - Explorador de archivos para los repos de Github.
-- **[React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)** - Herramientas para debugear React
-- **[Vue.js devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en)** - Herramientas para debugear Vue
-- **[Svelte Devtools](https://chrome.google.com/webstore/detail/svelte-devtools/ckolcbmkjpjmangdbmnkpjigpkddpogn?hl=en)** - Herramientas para debugear Svelte
-- **[Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)** - Herramientas para debugear Redux
+- **[Clear Cache](https://chrome.google.com/webstore/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn?hl=en)** - **Borra la caché y los datos de navegación** con un solo click.
+- **[ColorZilla](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp?hl=en)** - **Selector de colores**, generador de degradados y otras cosas.
+- **[JSON Viewer](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh?hl=en)** - Highlighter para **JSON**.
+- **[Lighthouse](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en)** - Herramienta para mejorar **rendimiento, calidad y corrección de tu web**.
+- **[Wappalyzer](https://www.google.com/chrome/)** - ¿Quieres saber **qué tecnologías usa** esta web?
+- **[Octotree](https://chrome.google.com/webstore/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc?hl=en)** - **Explorador** de archivos para los repos de **Github**.
+- **[React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)** - Herramientas para **debuggear React**.
+- **[Vue.js devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en)** - Herramientas para **debuggear Vue**.
+- **[Svelte Devtools](https://chrome.google.com/webstore/detail/svelte-devtools/ckolcbmkjpjmangdbmnkpjigpkddpogn?hl=en)** - Herramientas para **debuggear Svelte**.
+- **[Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)** - Herramientas para **debuggear Redux**.
 
-## Control de veriones
+## Control de veriones - Git
 
-Existen varios sistemas de control de versiones. Estas herramientas nos ayudan a que nuestro trabajo quede registrado por versiones, es una manera de volver atrás en el tiempo por si la liamos parda. En mi caso y en el de la mayoría de los mortales, uso `Git`.
+Estas herramientas nos ayudan a que nuestro trabajo quede **registrado por versione**s, es una manera de **volver atrás** en el tiempo por si la liamos parda. En mi caso y en el de la mayoría de los mortales, uso `Git`.
 
-### Git
-
-Puedes ver como instalar `Git` **<a href="/linux/configurar-ubuntu" target="_blank" rel="noopener noreferrer">aquí</a>**. También es interesante que le eches más adelante un ojo a **[Git Flow](https://danielkummer.github.io/git-flow-cheatsheet/)**.
+> Puedes ver como instalar `Git` **<a href="/linux/configurar-ubuntu" target="_blank" rel="noopener noreferrer">aquí</a>**. También es interesante que le eches más adelante un ojo a **[Git Flow](https://danielkummer.github.io/git-flow-cheatsheet/)**.
 
 ### Empezar en Git
 
@@ -77,9 +73,9 @@ Existen infinidad de editores de código, **[Vim](https://www.vim.org/)**, **[No
 
 ### VSCode
 
-La verdad es que es un editor genial, tienes infinidad de plugins para adaptar casi cualquier herramienta. Te dejo un enlace con una lista personal de plugins.
+La verdad es que es un editor genial, tienes infinidad de plugins para adaptar casi cualquier herramienta.
 
-- **<a href="/vscode/plugins" target="_blank" rel="noopener noreferrer">VS Code Plugins</a>**
+> **<a href="/vscode/plugins" target="_blank" rel="noopener noreferrer">VS Code Plugins</a>**
 
 ## Herramientas Clean Code
 
