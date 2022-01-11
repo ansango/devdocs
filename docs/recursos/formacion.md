@@ -29,6 +29,7 @@ Y los itinerarios te permiten como a **MacFly**, ver de dónde vienes y a dónde
 - **[Backend Roadmap](https://roadmap.sh/backend)**
 - **[DevOps Roadmap](https://roadmap.sh/devops)**
 - **[React Roadmap](https://roadmap.sh/react)**
+- **[Angular](https://roadmap.sh/react/angular)**
 
 ## ¿Dónde aprender?
 
@@ -40,36 +41,41 @@ Recuerda que sale un framework nuevo cada **dos minutos 🕥**.
 
 ### Plataformas
 
-- **[DevTo](https://dev.to/)**
-- **[Free Code Camp](https://www.freecodecamp.org/news/tag/web-development/)**
-- **[Tutorials Digital Ocean](https://www.digitalocean.com/community/tutorials)**
-- **[LogRocket](https://blog.logrocket.com/)**
-- **[Scoth IO](https://scotch.io/)**
-- **[CSS Tricks](https://css-tricks.com/)**
-- **[Kirupa](https://www.kirupa.com/)**
-- **[Learn Anything](https://learn-anything.xyz/)**
-- **[Best of JS](https://bestofjs.org/)**
-- **[O’Reilly](https://learning.oreilly.com/home/)**
+Sitios donde poder cacharrear, compartir y sobre todo aprender.
+
+- **[DevTo](https://dev.to/)** - Un lugar donde los **desarrolladores comparten**, se actualizan y hacen crecer sus carreras.
+- **[Free Code Camp](https://www.freecodecamp.org/news/tag/web-development/)** - Plataforma para **aprender código gratis**.
+- **[Tutorials Digital Ocean](https://www.digitalocean.com/community/tutorials)** - Una larga lista de **tutoriales gratuitos**.
+- **[LogRocket](https://blog.logrocket.com/)** - Plataforma orientada orientada a **Frontend Monitoring**.
+- **[Scoth IO](https://scotch.io/)** - **Tutoriales prácticos** para desarrollo web.
+- **[CSS Tricks](https://css-tricks.com/)** - Artículos diarios sobre **CSS, HTML, JavaScript** diseño y desarrollo web.
+- **[Kirupa](https://www.kirupa.com/)** - Tutoriales, ejercicios de código, videos, libros...
+- **[Learn Anything](https://learn-anything.xyz/)** - Una plataforma para **aprender lo que sea**.
+- **[Best of JS](https://bestofjs.org/)** - El **trending de Javascript**.
+- **[O’Reilly](https://learning.oreilly.com/home/)** - **Biblioteca** de libros tech, de pago.
 
 ### Blogs
 
+Desarrolladores a los que seguir.
+
+- **[Dan Abramov](https://overreacted.io/)**
 - **[Josh Comeau](https://www.joshwcomeau.com/)**
 - **[Lee Robinson](https://leerob.io/blog)**
 - **[Akshay Thakur](https://www.akshay.rocks/)**
 - **[Marko Denic](https://markodenic.com/blog/)**
+- **[Flavio Copes](https://flaviocopes.com/)**
 - **[Miguel Ángel Durán](https://midu.dev/)**
 - **[Carlos Azaustre](https://carlosazaustre.es/)**
 - **[Alba Silvente](https://www.dawntraoz.com/)**
 - **[Adrià Fontcuberta](https://afontcu.dev/)**
 - **[Marina Aísa](https://marinaaisa.com/es/)**
 - **[Miriam González](https://miriamgonzalez.dev/)**
-- **[Flavio Copes](https://flaviocopes.com/)**
 
 ## Listas
 
-Y por último las **listas de cosas**. 
+Y por último las **listas de cosas**.
 
-Con esto puedes perder horas, días o puedes estar enfermo y morirte queriendo aprender todo.
+Con esto puedes perder horas, días o puedes estar enfermo y morirte queriendo aprender todo. 💀
 
 **[All Awesome Lists](https://github.com/sindresorhus/awesome)**
 
