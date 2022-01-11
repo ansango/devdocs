@@ -52,6 +52,22 @@ sidebar_position: 4
   - [Rollup](https://rollupjs.org/guide/en/)
   - [esbuild](https://esbuild.github.io/)
 
+## Patrones de diseño
+
+- **[Patrones de diseño en JavaScript](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)**
+- **[Refactoring.Guru](https://refactoring.guru/es)**
+- **[Patrones](https://www.patterns.dev/posts/)**
+
+## Clean Code
+
+- **[Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)**
+- **[Clean Code Javascript](https://github.com/ryanmcdermott/clean-code-javascript#table-of-contents)**
+
+## Regex
+
+- **[RegExr](https://regexr.com/)**
+- **[Regex Tester](https://regex101.com/)**
+
 ## Angular
 
 ---
