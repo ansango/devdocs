@@ -8,13 +8,13 @@ const darkCodeTheme = require("prism-react-renderer/themes/oceanicNext");
 const config = {
   title: "ansango docs",
   tagline: "Dev Docs molan",
-  url: "https://ansango-devdocs.vercel.app/",
+  url: "https://ansango-docs.vercel.app/",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "ansango",
-  projectName: "dev docs",
+  projectName: "ansango docs",
   i18n: {
     defaultLocale: "es",
     locales: ["es"],
@@ -64,7 +64,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "ansango dev docs",
+        title: "ansango docs",
         logo: {
           alt: "Dev Docs Logo",
           src: "img/logo.svg",
