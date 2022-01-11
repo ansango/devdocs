@@ -4,24 +4,20 @@ sidebar_position: 5
 
 # Backend & Friends
 
-## Backend
-
----
-
-### Node.js
+## Node.js
 
 - [Node.js](https://nodejs.org/en/)
 - [Aprender Node](https://nodejs.dev/learn)
 - [Express](https://expressjs.com/)
 - [Nest.js](https://nestjs.com/)
 
-### Laravel
+## Laravel
 
 - [Laravel](https://laravel.com/docs/8.x)
 - [Composer](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-20-04-es)
 - [Laravel XAMPP](https://www.alexmilla.net/instalar-paso-a-paso-laravel-bajo-xampp-en-windows/)
 
-### API
+## API
 
 - [Awesome REST](https://github.com/marmelab/awesome-rest)
 - [Awesome JSON Datasets](https://github.com/jdorfman/awesome-json-datasets)
@@ -32,15 +28,9 @@ sidebar_position: 5
 
 ## Bases de datos
 
----
-
-### MongoDB
-
 - [MongoDB en Ubuntu](/linux/instalar-mongodb)
 
 ## Despliegues
-
----
 
 - [Github Pages](https://pages.github.com/)
 - [Vercel](https://vercel.com/)
@@ -49,8 +39,6 @@ sidebar_position: 5
 - [NGINX Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-18-04)
 
 ## Machine Learning
-
----
 
 - [Tensorflow](https://www.tensorflow.org/js)
 - [ML5 JS](https://ml5js.org/)
