@@ -8,10 +8,14 @@ sidebar_position: 3
 
 ### `sudo / su`
 
+Puedes comprobar cuál es tu nombre de usuario con `whoami`:
+
 ```bash
 [ andrew@pc01 abc ]$ whoami
 andrew
 ```
+
+...y ejecutar un comando como otro usuario con `sudo -u username` (necesitará la contraseña de ese usuario):
 
 ```bash
 [ andrew@pc01 abc ]$ sudo -u test touch def && ls -l
@@ -19,12 +23,16 @@ total 0
 -rw-r--r-- 1 test test 0 Jan 11 20:05 def
 ```
 
+Si no se proporciona `-u`, el usuario por defecto es el superusuario (normalmente llamado "root"), con permisos ilimitados:
+
 ```bash
 [ andrew@pc01 abc ]$ sudo touch ghi && ls -l
 total 0
 -rw-r--r-- 1 test test 0 Jan 11 20:05 def
 -rw-r--r-- 1 root root 0 Jan 11 20:14 ghi
 ```
+
+Utiliza `su` para convertirte en otro usuario temporalmente (y `exit` para volver a cambiar):
 
 ```bash
 [ andrew@pc01 abc ]$ su test
@@ -40,16 +48,22 @@ andrew
 
 ### `!!`
 
+El superusuario (normalmente "root") es la única persona que puede instalar software, crear usuarios, etc. A veces es fácil olvidarse de eso, y puedes obtener un error:
+
 ```bash
 [ andrew@pc01 ~ ]$ apt install ruby
 E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
 E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
 ```
 
+Puedes volver a escribir el comando y añadir sudo al principio (ejecutarlo como superusuario):
+
 ```bash
 [ andrew@pc01 ~ ]$ sudo apt install ruby
 Reading package lists...
 ```
+
+O bien, puedes utilizar el atajo de teclado !!, que conserva el comando anterior:
 
 ```bash
 [ andrew@pc01 ~ ]$ apt install ruby
@@ -61,9 +75,13 @@ sudo apt install ruby
 Reading package lists...
 ```
 
+Por defecto, ejecutar un comando con `sudo` (e introducir correctamente la contraseña) permite al usuario ejecutar comandos de superusuario durante los siguientes 15 minutos. Una vez transcurridos esos 15 minutos, el usuario volverá a tener que introducir la contraseña de superusuario si intenta ejecutar un comando restringido.
+
 ## Permisos de archivo
 
 ### Permisos de archivos
+
+Los archivos pueden ser leídos (r), escritos (w), y/o ejecutados (x) por diferentes usuarios o grupos de usuarios, o no serlo. Los permisos de los archivos se pueden ver con el comando `ls -l` y se representan con 10 caracteres:
 
 ```bash
 [ andrew@pc01 ~ ]$ ls -lh
@@ -73,7 +91,15 @@ drwxr-xr-x 4 andrew andrew 4.0K Jan  4 19:37 tast
 -rw-r--r-- 1 andrew andrew    0 Jan 11 16:34 tist
 ```
 
+El primer carácter de cada línea representa el tipo de archivo, (`d` = directorio, `l` = enlace, `-` = archivo normal, etc.); luego hay tres grupos de tres caracteres que representan los permisos que tiene el usuario (u) propietario del archivo, los permisos que tiene el grupo (g) propietario del archivo y los permisos que tiene cualquier otro usuario (o). (El número que sigue a esta cadena de caracteres es el número de enlaces en el sistema de archivos a ese archivo (4 o 1 arriba)).
+
+`r` significa que esa persona / esas personas tienen permiso de lectura, `w` es el permiso de escritura, `x` es el permiso de ejecución. Si un directorio es "ejecutable", significa que puede ser abierto y su contenido puede ser listado. Estos tres permisos suelen representarse con un único número de tres dígitos, donde, si `x` está habilitado, el número se incrementa en 1, si w está habilitado, el número se incrementa en 2, y si `r` está habilitado, el número se incrementa en 4. Tenga en cuenta que estos son equivalentes a dígitos binarios (r-x -> 101 -> 5, por ejemplo). Así que los tres archivos anteriores tienen permisos de 755, 755 y 644, respectivamente.
+
+Las dos siguientes cadenas de cada lista son el nombre del propietario (andrew, en este caso) y el grupo del propietario (también andrew, en este caso). Luego viene el tamaño del archivo, su hora de modificación más reciente y su nombre. La bandera -h hace que la salida sea legible para los humanos (es decir, imprime 4.0K en lugar de 4096 bytes).
+
 ### `chmod / chown`
+
+Los permisos de los archivos pueden ser modificados con chmod estableciendo los bits de acceso:
 
 ```bash
 [ andrew@pc01 ~ ]$ chmod 777 test && chmod 000 tist && ls -lh
@@ -82,6 +108,8 @@ drwxr-xr-x 4 andrew andrew 4.0K Jan  4 19:37 tast
 -rwxrwxrwx 1 andrew andrew   40 Jan 11 16:16 test
 --------------- 1 andrew andrew    0 Jan 11 16:34 tist
 ```
+
+...o añadiendo (`+`) o quitando (`-`) los permisos `r`, `w` y `x` con banderas:
 
 ```bash
 [ andrew@pc01 ~ ]$ chmod +rwx tist && chmod -w test && ls -lh
@@ -92,9 +120,13 @@ drwxr-xr-x 4 andrew andrew 4.0K Jan  4 19:37 tast
 -rwxr-xr-x 1 andrew andrew    0 Jan 11 16:34 tist
 ```
 
+El usuario propietario de un archivo puede cambiarse con `chown`:
+
 ```bash
 [ andrew@pc01 ~ ]$ sudo chown marina test
 ```
+
+El grupo al que pertenece un archivo se puede cambiar con `chgrp`:
 
 ```bash
 [ andrew@pc01 ~ ]$ sudo chgrp hadoop tist && ls -lh
@@ -108,10 +140,14 @@ drwxr-xr-x 4 andrew andrew 4.0K Jan  4 19:37 tast
 
 ### Usuarios
 
+`users` muestra todos los usuarios conectados actualmente. Tenga en cuenta que un usuario puede estar conectado varias veces si -- por ejemplo -- está conectado a través de varias sesiones ssh.
+
 ```bash
 [ andrew@pc01 ~ ]$ users
 andrew colin colin colin colin colin krishna krishna
 ```
+
+Para ver todos los usuarios (incluso los que no han iniciado sesión), compruebe `/etc/passwd`. (**ADVERTENCIA**: ¡no modifique este archivo! Puede corromper las cuentas de los usuarios y hacer imposible el inicio de sesión en el sistema).
 
 ```bash
 [ andrew@pc01 ~ ]$ alias au="cut -d: -f1 /etc/passwd \
@@ -121,12 +157,16 @@ anaid
 andrew...
 ```
 
+Añade un usuario con `useradd`:
+
 ```bash
 [ andrew@pc01 ~ ]$ sudo useradd aardvark && au
 _apt
 aardvark
 anaid...
 ```
+
+Eliminar un usuario con `userdel`:
 
 ```bash
 [ andrew@pc01 ~ ]$ sudo userdel aardvark && au
@@ -260,7 +300,7 @@ Connection to 137.xxx.xxx.89 closed.
 
 ```bash
 [ andrew@pc01 ~ ]$ scp –P <port> hello andrew@137.xxx.xxx.89:~
-hello   
+hello
 ```
 
 ```bash
