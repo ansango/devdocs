@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Comandos Intermedios
@@ -380,124 +380,254 @@ Otras más comunes son `zsh`, `csh`, `fish` entre otras. Juega con diferentes sh
 
 ### `whereis / which / whatis`
 
-```bash
+`whereis` busca archivos "posiblemente útiles" relacionados con un comando en particular. Intentará devolver la ubicación del binario (código máquina ejecutable), el código fuente (archivos de origen del código) y la página `man` de ese comando:
 
+```bash
+[ andrew@pc01 ~ ]$ whereis ls
+ls: /bin/ls /usr/share/man/man1/ls.1.gz
 ```
 
-```bash
+`which` sólo devolverá la ubicación del binario (el propio comando):
 
+```bash
+[ andrew@pc01 ~ ]$ which ls
+/bin/ls
 ```
 
-```bash
+`whatis` imprime la descripción de una línea de un comando desde su página `man`:
 
+```bash
+[ andrew@pc01 ~ ]$ whatis whereis which whatis
+whereis (1)          - locate the binary, source, and manual page files for a command
+which (1)            - locate a command
+whatis (1)           - display one-line manual page descriptions
 ```
 
-```bash
+`which` es útil para encontrar la "versión original" de un comando que puede estar oculto por un alias:
 
+```bash
+[ andrew@pc01 ~ ]$ alias ls="ls -l"
+
+# “original” ls has been “hidden” by the alias defined above
+[ andrew@pc01 ~ ]$ ls
+total 36
+drwxr-xr-x 2 andrew andrew 4096 Jan  9 14:47 Desktop
+drwxr-xr-x 4 andrew andrew 4096 Dec  6 10:43 Git
+...
+
+# but we can still call “original” ls by using the location returned by which
+[ andrew@pc01 ~ ]$ /bin/ls
+Desktop  Git  TEST  c  ex.sh  ex2.sh  ex3.sh  file  file2  project  test
 ```
 
 ### `locate / find`
 
+`locate` encuentra un archivo en cualquier lugar del sistema haciendo referencia a una lista de archivos en caché que se actualiza de forma semiregular:
+
 ```bash
+[ andrew@pc01 ~ ]$ locate README.md
+/home/andrew/.config/micro/plugins/gotham-colors/README.md
+/home/andrew/.jenv/README.md
+/home/andrew/.myshell/README.md
+...
 
 ```
 
-```bash
+Dado que sólo busca en una lista, `locate` suele ser más rápido que la alternativa, `find`. `find` itera a través del sistema de archivos para encontrar el archivo que está buscando. Sin embargo, dado que está buscando en los archivos que existen actualmente en el sistema, siempre devolverá una lista actualizada de archivos, lo que no es necesariamente cierto con `locate`.
 
+```bash
+[ andrew@pc01 ~ ]$ find ~/ -iname "README.md"
+/home/andrew/.jenv/README.md
+/home/andrew/.config/micro/plugins/gotham-colors/README.md
+/home/andrew/.oh-my-zsh/plugins/ant/README.md
+...
 ```
+
+`find` tiene muchas más características que `locate`, y puede buscar por edad del archivo, tamaño, propiedad, tipo, marca de tiempo, permisos, profundidad dentro del sistema de archivos; `find` puede buscar usando expresiones regulares, ejecutar comandos en los archivos que encuentra, y más.
+
+Cuando necesites una lista rápida (pero posiblemente obsoleta) de archivos, o no estés seguro de en qué directorio se encuentra un archivo concreto, utiliza `locate`. Cuando necesites una lista precisa de archivos, tal vez basada en algo más que los nombres de los archivos, y necesites hacer algo con esos archivos, usa `find`.
 
 ## Descargando cosas
 
 ### `ping / wget / curl`
 
-```bash
-
-```
+`ping` intenta abrir una línea de comunicación con un host de la red. Principalmente, se utiliza para comprobar si la conexión a Internet está caída o no:
 
 ```bash
-
+[ andrew@pc01 ~ ]$ ping google.com
+PING google.com (74.125.193.100) 56(84) bytes of data.
+Pinging 74.125.193.100 with 32 bytes of data:
+Reply from 74.125.193.100: bytes=32 time<1ms TTL=64
+...
 ```
+
+`wget` se utiliza para descargar fácilmente un archivo de Internet:
 
 ```bash
-
+[ andrew@pc01 ~ ]$ wget \
+> http://releases.ubuntu.com/18.10/ubuntu-18.10-desktop-amd64.iso
 ```
+
+`curl` puede usarse igual que wget (no olvides la bandera `--output`):
+
+```bash
+[ andrew@pc01 ~ ]$ curl \
+> http://releases.ubuntu.com/18.10/ubuntu-18.10-desktop-amd64.iso \
+> --output ubuntu.iso
+```
+
+`curl` y `wget` tienen sus propios puntos fuertes y débiles. `curl` soporta muchos más protocolos y está más ampliamente disponible que `wget`; `curl` también puede enviar datos, mientras que `wget` sólo puede recibir datos. `wget` puede descargar archivos recursivamente, mientras que `curl` no puede.
 
 ### `apt / gunzip / tar / gzip`
 
-```bash
+Las distribuciones de Linux descendientes de Debian tienen una fantástica herramienta de gestión de paquetes llamada `apt`. Se puede utilizar para instalar, actualizar o eliminar software en su máquina. Para buscar en `apt` un software en particular, utilice `apt search`, e instálalo con `apt install`:
 
+```bash
+[ andrew@pc01 ~ ]$ apt search bleachbit
+...bleachbit/bionic,bionic 2.0-2 all
+  delete unnecessary files from the system
+
+# you need to 'sudo' to install software
+[ andrew@pc01 ~ ]$ sudo apt install bleachbit
 ```
 
-```bash
+El software de Linux suele venir empaquetado en archivos .tar.gz ("tarball"):
 
+```bash
+[ andrew@pc01 ~ ]$ wget \
+> https://github.com/atom/atom/releases/download/v1.35.0-beta0/atom-amd64.tar.gz
 ```
 
-```bash
+..este tipo de archivos se pueden descomprimir con `gunzip`:
 
+```bash
+[ andrew@pc01 ~ ]$ gunzip atom-amd64.tar.gz && ls
+atom-amd64.tar
 ```
 
-```bash
+Un archivo .tar.gz se convertirá con `gunzip` en un archivo .tar, que puede extraerse a un directorio de archivos utilizando `tar -xf` (-x para "extraer", -f para especificar el archivo a "desatar"):
 
+```bash
+[ andrew@pc01 ~ ]$ tar -xf atom-amd64.tar && mv \
+atom-beta-1.35.0-beta0-amd64 atom && ls
+atom atom-amd64.tar
 ```
 
-```bash
+Para ir en la dirección inversa, puedes crear (`-c`) un archivo tar desde un directorio y comprimirlo (o descomprimirlo, según el caso) con `-z`:
 
+```bash
+[ andrew@pc01 ~ ]$ tar -zcf compressed.tar.gz atom && ls
+atom  atom-amd64.tar  compressed.tar.gz
 ```
 
-```bash
+Los archivos .tar también se pueden comprimir con `gzip`:
 
+```bash
+[ andrew@pc01 ~ ]$ gzip atom-amd64.tar && ls
+atom  atom-amd64.tar.gz compressed.tar.gz
 ```
 
 ## Redirigir la entrada y la salida
 
 ### `| / > / < / echo / printf`
 
-```bash
+Por defecto, los comandos del shell leen su entrada del flujo de entrada estándar (también conocido como stdin o 0) y escriben en el flujo de salida estándar (también conocido como stdout o 1), a menos que haya un error, que se escribe en el flujo de error estándar (también conocido como stderr o 2).
 
+`echo` writes text to stdout by default, which in most cases will simply print it to the terminal:
+
+```bash
+[ andrew@pc01 ~ ]$ echo "hello"
+hello
 ```
 
-```bash
+El operador pipe, `|`, redirige la salida del primer comando a la entrada del segundo:
 
+```bash
+# 'wc' (word count) returns the number of lines, words, bytes in a file
+[ andrew@pc01 ~ ]$ echo "example document" | wc
+      1       2      17
 ```
 
-```bash
+`>` redirige la salida de stdout a un lugar determinado
 
+```bash
+[ andrew@pc01 ~ ]$ echo "test" > file && head file
+test
 ```
 
-```bash
+`printf` es un `echo` mejorado, que permite el formateo y las secuencias de escape:
 
+```bash
+[ andrew@pc01 ~ ]$ printf "1\n3\n2"
+1
+3
+2
 ```
 
-```bash
+`<` obtiene la entrada desde una ubicación particular, en lugar de stdin:
 
+```bash
+# 'sort' sorts the lines of a file alphabetically / numerically
+[ andrew@pc01 ~ ]$ sort <(printf "1\n3\n2")
+1
+2
+3
 ```
 
-```bash
+La forma recomendada de enviar el contenido de un archivo a un comando es utilizar `<`. Ten en cuenta que esto hace que los datos "fluyan" de derecha a izquierda en la línea de comandos, en lugar de (el quizás más natural, para los angloparlantes) de izquierda a derecha:
 
+```bash
+[ andrew@pc01 ~ ]$ printf "1\n3\n2" > file && sort < file
+1
+2
+3
 ```
 
 ### `0 / 1 / 2 / tee`
 
-```bash
+0, 1 y 2 son los flujos estándar de entrada, salida y error, respectivamente. Los flujos de entrada y salida pueden ser redirigidos con los operadores `|`, `>` y `<` mencionados anteriormente, pero stdin, stdout y stderr también pueden ser manipulados directamente usando sus identificadores numéricos:
 
+Escribe en stdout o stderr con `>&1` o `>&2`:
+
+```bash
+[ andrew@pc01 ~ ]$ cat test
+echo "stdout" >&1
+echo "stderr" >&2
 ```
 
-```bash
+Por defecto, stdout y stderr imprimen la salida al terminal:
 
+```bash
+[ andrew@pc01 ~ ]$ ./test
+stderr
+stdout
 ```
 
-```bash
+Redirigir stdout a `/dev/null` (sólo imprimir la salida enviada a stderr):
 
+```bash
+[ andrew@pc01 ~ ]$ ./test 1>/dev/null
+stderr
 ```
 
-```bash
+Redirigir stderr a `/dev/null` (sólo imprimir la salida enviada a stdout):
 
+```bash
+[ andrew@pc01 ~ ]$ ./test 2>/dev/null
+stdout
 ```
 
-```bash
+Redirige toda la salida a `/dev/null` (no imprime nada):
 
+```bash
+[ andrew@pc01 ~ ]$ ./test &>/dev/null
 ```
 
-```bash
+Send output to stdout and any number of additional locations with `tee`:
 
+```bash
+[ andrew@pc01 ~ ]$ ls && echo "test" | tee file1 file2 file3 && ls
+file0
+test
+file0  file1  file2  file3
 ```

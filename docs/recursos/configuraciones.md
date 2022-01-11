@@ -24,7 +24,7 @@ Aquí tienes una guía de `Bash` y también un artículo con los comandos más u
 
 - **[The Bash Guide](https://guide.bash.academy/)**
 - **[ZSH](https://ohmyz.sh/)**
-- **<a href="/linux/comandos-bash/intro" target="_blank" rel="noopener noreferrer">101 Comandos en Bash</a>**
+- **<a href="/linux/comandos-bash/basicos" target="_blank" rel="noopener noreferrer">101 Comandos en Bash</a>**
 
 ## Navegadores
 

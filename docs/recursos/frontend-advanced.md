@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Frontend Advanced
 
-## Responsive, performance, SEO & analytics
+## Diseño, performance, SEO & analytics
 
 ### Diseño
 
@@ -44,7 +44,7 @@ sidebar_position: 4
 
 - **[Babel](https://babeljs.io/)**
 
-### Module Bundlers
+### Module Bundles
 
 - **[Webpack](https://webpack.js.org/)**
 - **[Browserify](https://browserify.org/)**

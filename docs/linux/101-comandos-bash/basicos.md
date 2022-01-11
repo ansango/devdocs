@@ -1,8 +1,10 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Comandos Básicos
+
+Leyendo artículos en **<a href="https://dev.to" target="_blank" rel="noopener noreferrer">dev.to</a>** encontré uno fantástico que recopilaba 101 comandos en Bash, así que he traducido el **<a href="https://dev.to/awwsmm/101-bash-commands-and-tips-for-beginners-to-experts-30je" target="_blank" rel="noopener noreferrer">artículo</a>** de **<a href="https://awwsmm.com/" target="_blank" rel="noopener noreferrer">Andrew William</a>**, al cual le agradezco mucho su publicación ❤️
 
 ## Primeros Comandos, Navegando por el Sistema de Archivos
 
