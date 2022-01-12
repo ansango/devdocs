@@ -4,517 +4,355 @@ sidebar_position: 3
 
 # useEffect
 
-Siempre que necesitemos hacer uso de **efectos secundarios** en nuestra aplicación, **useEffect** es el camino a seguir.
+Con **useEffect**, se invocan **efectos secundarios** desde los componentes funcionales, lo cual es un concepto importante que hay que entender.
 
-Los efectos se ejecutan **después de cada renderización completa**, pero se puede elegir dispararlos sólo cuando ciertos valores han cambiado.
+Trabajar con los efectos secundarios invocados por el **Hook useEffect** puede parecer engorroso al principio, pero al final aprenderás que todo tiene mucho sentido.
 
-Para ello este hook utiliza una **array de dependencias**: **(variables o estados que useEffect escucha para los cambios)**. Cuando sus valores cambian, el cuerpo principal del hook se ejecuta.
+Es clave entender completamente el flujo de componentes de los componentes funcionales.
 
-El `return` de este hook se utiliza para limpiar los métodos que ya se están ejecutando, como los temporizadores. La **primera vez que se llama a este hook**, se evalúa el **cuerpo principal** del mismo.
+## Conceptos básicos
 
-**El resto de veces** que se llame al hook, se evaluará **primero** el `return` y **después** el cuerpo principal. Este comportamiento es especialmente útil para limpiar el código que ya se está ejecutando antes de volver a ejecutarlo, lo que nos permite evitar fugas de memoria.
+En primer lugar, hay que empezar a pensar en los efectos. ¿Qué son realmente los efectos? Algunos ejemplos son:
 
-## Ejecutar una vez en el montaje
+- **Obtención de datos**
+- **Lectura del localStorage**
+- **Registrar y anular el registro de event listeners**
 
-### Obtener datos de una API
+**useEffect** fomenta la separación de preocupaciones y reduce la duplicación de código.
 
-El siguiente ejemplo en el que **obtenemos datos de una API** solo se ejecutará una vez, debido al array vacio `[]` de dependencias.
+### Conceptos clave del uso de los efectos
 
-```jsx {7-15}
-import { useState, useEffect } from "react";
+- Hay que entender **cuándo** se (re)renderizan los componentes porque los efectos se ejecutan **después de cada ciclo de renderizado**.
 
-const UseCaseFetchApi = (props) => {
-  // useState es necesario para mostrar el resultado en la pantalla
-  const [bio, setBio] = useState({});
+- Siempre se ejecutan después del renderizado, pero tienes **opciones para optar** por este comportamiento.
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("https://swapi.dev/api/people/1/");
-      const data = await response.json();
-      console.log(data);
-      setBio(data);
-    };
-    fetchData();
-  }, []);
+- Un efecto **sólo se vuelve a ejecutar** si al menos uno de los valores especificados en sus dependencias **ha cambiado desde el último ciclo de renderizado**.
 
-  // Un array de dependencias vacío hará que useEffect se ejecute sólo una vez al inicio porque ese array nunca cambia
+- Hay que asegurarse de que los componentes no se vuelven a **renderizar innecesariamente**, así omitiremos las repeticiones innecesarias de los efectos.
 
-  return (
-    <>
-      <hr />
-      <h2>useEffect use case</h2>
-      <h3>Running once on mount: fetch API data</h3>
-      <p>Luke Skywalker's bio:</p>
-      <pre>{JSON.stringify(bio, null, "\t")}</pre>
-    </>
-  );
-};
+- Las **funciones** definidas en el cuerpo de tu componente se recrean **en cada render**.
 
-export default UseCaseFetchApi;
+- Hay que pensar en el **estado asociado a los efectos**, ya que ejecutas efectos basados en los cambios de estado a través de los ciclos de renderizado.
+
+### Utilizar siempre para tareas asíncronas
+
+En lugar de escribir **código asíncrono sin useEffect** que podría **bloquear la UI**, utilizar useEffect es un patrón conocido en la comunidad React.
+
+Además, los bloques useEffect son candidatos a extraerse en **Custom Hooks** reutilizables y aún más semánticos.
+
+### Usar múltiples efectos para separar las preocupaciones
+
+Aunque useEffect está diseñado para manejar una sola preocupación, **a veces necesitarás más de un efecto**.
+
+Cuando intentas usar un solo efecto para múltiples propósitos, disminuye la legibilidad de tu código, y algunos casos de uso son directamente irrealizables.
+
+### Momento de ejecución de los efectos
+
+Los efectos definidos con useEffect **se invocan después del renderizado**. Para ser más específicos, se ejecutan tanto **después del primer renderizado** como **después de cada actualización**.
+
+A diferencia de los métodos del ciclo de vida, los efectos **no bloquean** la UI porque se ejecutan de **forma asíncrona**.
+
+Es bastante común "hacer algo" cuando el componente se renderiza por primera vez. Con los **Hooks** no se hace algo después de montar el componente, **se hace algo después de que el componente se presente por primera** vez al usuario.
+
+Los Hooks te obligan a pensar más desde la perspectiva del usuario.
+
+![img alt](/img/react/hooks.png)
+
+## Cómo ejecutar los efectos secundarios con useEffect
+
+Un **useEffect** así:
+
+```jsx
+useEffect(
+  () => {
+    // execute side effect
+  },
+  // optional dependency array
+  [
+    // 0 or more entries
+  ]
+);
 ```
 
-La obtención de datos de la API en useEffect siempre es **complicada** y siempre debes recordar **cancelar tu suscripción**.
+Ya que el segundo parámetro es opcional la siguiente ejecución es totalmente válida:
 
-```jsx {7,15}
-import { useState, useEffect } from "react";
-
-const UseCaseFetchApi = (props) => {
-  const [bio, setBio] = useState({});
-
-  useEffect(() => {
-    let mounted = true;
-    const fetchData = async () => {
-      const response = await fetch("https://swapi.dev/api/people/1/");
-      const data = await response.json();
-      console.log(data);
-      setBio(data);
-    };
-    fetchData();
-    return () => (mounted = false);
-  }, []);
-
-  return (
-    <>
-      <hr />
-      <h2>useEffect use case</h2>
-      <h3>Running once on mount: fetch API data</h3>
-      <p>Luke Skywalker's bio:</p>
-      <pre>{JSON.stringify(bio, null, "\t")}</pre>
-    </>
-  );
-};
-
-export default UseCaseFetchApi;
+```jsx
+useEffect(() => {
+  // execute side effect
+});
 ```
 
-El componente puede ser desmontado cuando la promesa se resuelve y esto tratará de setear el estado que causará **fugas de memoria**.
+### Sin array de dependencias
 
-## Ejecutar en el cambio de estado
+Veamos un ejemplo. El usuario puede cambiar el título del documento con un campo de entrada.
 
-### Validación de un input
+```jsx {7-10,14}
+import { useState, useRef, useEffect } from "react";
 
-La **validación de un input** mientras recibe caracteres es otra gran aplicación para **useEffect**.
-
-Mientras la entrada se almacena en un estado usando **useState**, la validación tiene lugar cada vez que la entrada cambia, dando una **respuesta inmediata al usuario**.
-
-```jsx {11-17}
-import { useEffect, useState } from "react";
-
-const UseCaseInputValidation = (props) => {
-  const [input, setInput] = useState("");
-  const [isValid, setIsValid] = useState(false);
-
-  const inputHandler = (e) => {
-    setInput(e.target.value);
-  };
+const EffectsDemoNoDependency = () => {
+  const [title, setTitle] = useState("default title");
+  const titleRef = useRef();
 
   useEffect(() => {
-    if (input.length < 5 || /\d/.test(input)) {
-      setIsValid(false);
-    } else {
-      setIsValid(true);
-    }
-  }, [input]);
-
-  return (
-    <>
-      <hr />
-      <h2>useEffect use case</h2>
-      <h3>Running on state change: validating input field</h3>
-      <form>
-        <label htmlFor="input">
-          Write something (more than 5 non numerical characters is a valid
-          input)
-        </label>
-        <br />
-        <input
-          type="text"
-          id="input"
-          autoComplete="off"
-          onChange={inputHandler}
-          style={{ height: "1.5rem", width: "20rem", marginTop: "1rem" }}
-        />
-      </form>
-      <p>
-        <span
-          style={
-            isValid
-              ? { backgroundColor: "lightgreen", padding: ".5rem" }
-              : { backgroundColor: "lightpink", padding: ".5rem" }
-          }
-        >
-          {isValid ? "Valid input" : "Input not valid"}
-        </span>
-      </p>
-    </>
-  );
-};
-
-export default UseCaseInputValidation;
-```
-
-### Live Filtering
-
-Podemos utilizar **useEffect** para filtrar un array **sobre la marcha** escribiendo letras en un input.
-
-Para ello, necesitaremos utilizar **useState** para guardar el input, y una implementación del **filtro dentro del useEffect** que se activará cuando la entrada cambie, gracias a las **dependencias** de useEffect.
-
-```jsx {24-31}
-import { useEffect, useState } from "react";
-
-const array = [
-  { key: "1", type: "planet", value: "Tatooine" },
-  { key: "2", type: "starship", value: "Death Star" },
-  { key: "3", type: "person", value: "Luke Skywalker" },
-  { key: "4", type: "person", value: "Darth Vader" },
-  { key: "5", type: "person", value: "Leia Organa" },
-];
-
-const UseCaseLiveFilter = (props) => {
-  const [inputValue, setInputValue] = useState("");
-  const [inputType, setInputType] = useState("");
-  const [filteredArray, setFilteredArray] = useState(array);
-
-  const inputValueHandler = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const inputTypeHandler = (e) => {
-    setInputType(e.target.value);
-  };
-
-  useEffect(() => {
-    setFilteredArray((_) => {
-      const newArray = array
-        .filter((item) => item.value.includes(inputValue))
-        .filter((item) => item.type.includes(inputType));
-      return newArray;
-    });
-  }, [inputValue, inputType]);
-
-  const listItems = filteredArray.map((item) => (
-    <tr>
-      <td style={{ border: "1px solid lightgray", padding: "0 1rem" }}>
-        {item.type}
-      </td>
-      <td style={{ border: "1px solid lightgray", padding: "0 1rem" }}>
-        {item.value}
-      </td>
-    </tr>
-  ));
-
-  return (
-    <>
-      <hr />
-      <h2>useEffect use case</h2>
-      <h3>Running on state change: live filtering</h3>
-      <form
-        style={{
-          maxWidth: "23rem",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          <label htmlFor="input-type">
-            Filter by <b>type</b>
-          </label>
-          <br />
-          <input
-            type="text"
-            id="input-type"
-            autoComplete="off"
-            onChange={inputTypeHandler}
-            style={{ height: "1.5rem", width: "10rem", marginTop: "1rem" }}
-          />
-        </div>
-        <div>
-          <label htmlFor="input-value">
-            Filter by <b>value</b>
-          </label>
-          <br />
-          <input
-            type="text"
-            id="input-value"
-            autoComplete="off"
-            onChange={inputValueHandler}
-            style={{ height: "1.5rem", width: "10rem", marginTop: "1rem" }}
-          />
-        </div>
-      </form>
-      <br />
-      <table
-        style={{ width: "20rem", border: "1px solid gray", padding: "0 1rem" }}
-      >
-        <tr>
-          <th>Type</th>
-          <th>Value</th>
-        </tr>
-        {listItems}
-      </table>
-    </>
-  );
-};
-
-export default UseCaseLiveFilter;
-```
-
-### Disparar una animación
-
-Necesitaremos un **useState** para un **array de artículos**, y otro **useState** para disparar la animación.
-
-Utilizando un temporizador dentro del **useEffect**, deberemos limpiarlo antes de que se establezca de nuevo utilizando el `return` del useEffect, que se ejecuta antes de que el cuerpo principal del gancho useEffect sea evaluado (excepto para el primer render).
-
-```jsx {13,14,33-42}
-import { useState, useEffect } from "react";
-import classes from "./UseCaseAnimation.module.css";
-
-const products = [
-  "Death Star",
-  "CR90 corvette",
-  "Millennium Falcon",
-  "X-wing fighter",
-  "TIE fighter",
-];
-
-const UseCaseAnimation = (props) => {
-  const [cart, setCart] = useState([]);
-  const [triggerAnimation, setTriggerAnimation] = useState(false);
-
-  // Añadir artículo al carrito (array)
-  const clickHandler = (e) => {
-    e.preventDefault();
-    setCart((prevCart) => {
-      const newCart = [...prevCart];
-      newCart.push(e.target.value);
-      return newCart;
-    });
-  };
-
-  // Borrar el carro (array)
-  const clearHandler = (e) => {
-    e.preventDefault();
-    setCart([]);
-  };
-
-  // Activar la animación del carro
-  useEffect(() => {
-    setTriggerAnimation(true);
-
-    const timer = setTimeout(() => {
-      setTriggerAnimation(false);
-    }, 900);
-
-    // Borrar el temporizador antes de establecer uno nuevo
-    return () => clearTimeout(timer);
-  }, [cart]);
-
-  const cartClasses = triggerAnimation
-    ? `${classes["jello-horizontal"]} ${classes.cart}`
-    : classes.cart;
-
-  const itemsOnSale = products.map((itemOnSale) => {
-    return (
-      <li>
-        <form>
-          <span className={classes.item}>
-            {itemOnSale}{" "}
-            <button onClick={clickHandler} value={`"${itemOnSale}"`}>
-              Add to cart
-            </button>
-          </span>
-        </form>
-      </li>
-    );
+    console.log("useEffect");
+    document.title = title;
   });
 
-  const cartItems = cart.map((item) => {
-    return <li>{item}</li>;
-  });
+  const handleClick = () => setTitle(titleRef.current.value);
+
+  console.log("render");
 
   return (
-    <>
-      <hr />
-      <h2>useEffect use case</h2>
-      <h3>Running on state change: trigger animation on new array value</h3>
-      <h4 style={{ color: "blue" }}>Starship Marketplace</h4>
-      <ul>{itemsOnSale}</ul>
-      <div className={cartClasses}>
-        <span>Cart</span>
-      </div>
-      <div>
-        <p>Elements in cart:</p>
-        <ul>{cartItems}</ul>
-      </div>
-      <form>
-        <button className={classes.margin} onClick={clearHandler} value="clear">
-          Clear cart
-        </button>
-      </form>
-    </>
-  );
-};
-
-export default UseCaseAnimation;
-```
-
-## Ejecutar en el cambio de props
-
-### Actualizar lista en fetch API
-
-Aquí estamos **enviando los datos** obtenidos a un **componente hijo**, y cada vez que esos datos cambian, el componente hijo los vuelve a procesar.
-
-```jsx {6-10,33,64}
-import { useState, useEffect } from "react";
-
-const BaconParagraphs = ({ chopBacon }) => {
-  const [baconParagraphText, setBaconParagraphText] = useState([]);
-
-  useEffect(() => {
-    setBaconParagraphText(
-      chopBacon.map((piece) => <p key={Math.random()}>{piece}</p>)
-    );
-  }, [chopBacon]);
-
-  return (
-    <>
-      <p>Number of paragraphs: {baconParagraphText.length}</p>
-      {baconParagraphText}
-    </>
-  );
-};
-
-const UseCaseUpdateFetch = () => {
-  const [bacon, setBacon] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
-    setIsLoading(true);
-    const response = await fetch(
-      `https://baconipsum.com/api/?type=all-meat&paras=${e.target.paragraphs.value}&start-with-lorem=1`
-    );
-    const data = await response.json();
-    setIsLoading(false);
-    setBacon(data);
-  };
-
-  return (
-    <>
-      <hr />
-      <h2>useEffect use case</h2>
-      <h3>
-        Running on props change: update paragraph list on fetched API data
-        update
-      </h3>
-      <form onSubmit={submitHandler}>
-        <label
-          htmlFor="paragraphs"
-          style={{ display: "block", marginBottom: "1rem" }}
-        >
-          How many paragraphs of "Bacon ipsum" do you want?
-        </label>
-        <select id="paragraphs" name="paragraphs">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
-        <input
-          type="submit"
-          value="Show me the bacon!"
-          style={{ marginLeft: "1rem" }}
-        />
-        {isLoading && <span>Getting paragraphs... 🐷</span>}
-      </form>
-      <BaconParagraphs chopBacon={bacon} />
-    </>
-  );
-};
-
-export default UseCaseUpdateFetch;
-```
-
-### Actualizar precios BTC en fetch API
-
-En este ejemplo, **useEffect** se utiliza para obtener nuevos datos de una API cada **3 segundos**.
-
-El componente hijo useEffect recibe la hora como dependencia y cada vez que esa dependencia cambia, se lanza un nuevo fetch(). De esta manera, podemos tener un tipo de cambio de BTC actualizado en nuestra aplicación.
-
-```jsx {19-36,52-57,68}
-import { useState, useEffect } from "react";
-import classes from "./UseCaseUpdateApi.module.css";
-
-const getCurrentTime = () => {
-  const now = new Date();
-  const time =
-    now.getHours() +
-    ":" +
-    ("0" + now.getMinutes()).slice(-2) +
-    ":" +
-    ("0" + now.getSeconds()).slice(-2);
-  return time;
-};
-
-const ExchangeRate = ({ onTime }) => {
-  const [exchangeRate, setExchangeRate] = useState(0);
-  const [isAnimated, setIsAnimated] = useState(false);
-
-  useEffect(() => {
-    const getExchangeRate = async () => {
-      const response = await fetch("https://api.nomics.com/v1/23546");
-      const data = await response.json();
-      setExchangeRate(data.find((item) => item.currency === "BTC").rate);
-    };
-    getExchangeRate();
-
-    setIsAnimated(true);
-    const classTimer = setTimeout(() => {
-      setIsAnimated(false);
-    }, 1500);
-
-    return () => {
-      clearTimeout(classTimer);
-      setExchangeRate(exchangeRate);
-    };
-  }, [onTime]);
-
-  const priceClasses = isAnimated
-    ? `${classes.price} ${classes.heartbeat}`
-    : `${classes.price}`;
-
-  return (
-    <div className={priceClasses}>
-      USD <b>{exchangeRate}</b>
+    <div>
+      <input ref={titleRef} />
+      <button onClick={handleClick}>change title</button>
     </div>
   );
 };
+```
 
-const UseCaseUpdateApi = (props) => {
-  const [time, setTime] = useState(getCurrentTime());
+Como hemos omitido el segundo argumento (`[]`), este useEffect es llamado después de cada renderización. Como hemos implementado un input no controlado con la ayuda del hook **useRef**, `handleClick` sólo se invoca después de que el usuario haga clic en el botón. Esto provoca un re-renderizado porque `setTitle` realiza un cambio de estado.
+
+**Después de cada ciclo de renderizado, useEffect se ejecuta de nuevo**.
+
+![img alt](/img/react/render-cycle.gif)
+
+### Renderizados innecesarios
+
+Los dos primeros outputs se deben al renderizado inicial después de montar el componente. Ahora añadimos otro estado al ejemplo para alternar un modo oscuro.
+
+```jsx
+const EffectsDemoNoDependency = () => {
+  const [title, setTitle] = useState("default title");
+  const titleRef = useRef();
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(getCurrentTime());
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+    console.log("useEffect");
+    document.title = title;
+  });
+
+  console.log("render");
+
+  const handleClick = () => setTitle(titleRef.current.value);
+  const handleCheckboxChange = () => setDarkMode((prev) => !prev);
 
   return (
-    <>
-      <hr />
-      <h2>useEffect use case</h2>
-      <h3>
-        Running on props change: updating fetched API data to get updated BTC
-        price
-      </h3>
-      <span>Last updated: {time} (polling every 3 seconds)</span>
-      <ExchangeRate onTime={time} />
-    </>
+    <div className={darkMode ? "dark-mode" : ""}>
+      <label htmlFor="darkMode">dark mode</label>
+      <input
+        name="darkMode"
+        type="checkbox"
+        checked={darkMode}
+        onChange={handleCheckboxChange}
+      />
+      <input ref={titleRef} />
+      <button onClick={handleClick}>change title</button>
+    </div>
   );
 };
-
-export default UseCaseUpdateApi;
 ```
+
+Sin embargo, este ejemplo conduce a **efectos innecesarios** cuando se hace click en darkMode.
+
+![img alt](/img/react/dark-mode.gif)
+
+### Bucle infinito de efectos
+
+Echemos un vistazo al siguiente ejemplo e intentemos leer el título inicial del `localStorage`, si está disponible, en un useEffect adicional.
+
+```jsx {5-8,10-14}
+const EffectsDemoInfiniteLoop = () => {
+  const [title, setTitle] = useState("default title");
+  const titleRef = useRef();
+
+  useEffect(() => {
+    console.log("useEffect title");
+    document.title = title;
+  });
+
+  useEffect(() => {
+    console.log("useEffect local storage");
+    const persistedTitle = localStorage.getItem("title");
+    setTitle(persistedTitle || []);
+  });
+
+  console.log("render");
+
+  const handleClick = () => setTitle(titleRef.current.value);
+  return (
+    <div>
+      <input ref={titleRef} />
+      <button onClick={handleClick}>change title</button>
+    </div>
+  );
+};
+```
+
+Como puedes ver, tenemos un **bucle infinito** de efectos porque **cada cambio** de estado con `setTitle` desencadena **otro efecto**, que actualiza el estado de nuevo.
+
+![img alt](/img/react/loop.gif)
+
+### La importancia del array de dependencias
+
+Volviendo al ejemplo de **darkMode**. ¿Por qué tenemos el problema de los efectos innecesarios?
+
+**Si no** se proporciona un array de dependencia, se ejecuta cada useEffect **después de cada ciclo de renderizado**.
+
+Esto se gestiona con el **array de dependencias**. React sólo ejecuta el useEffect **si al menos una de las dependencias proporcionadas ha cambiado desde la ejecución anterior**.
+
+La mayoría de las veces, queremos ejecutar los efectos secundarios **después de condiciones específicas**, por ejemplo, los datos han cambiado, una prop cambió, o el usuario ve por primera vez nuestro componente.
+
+```jsx {6-9}
+const EffectsDemoTwoStatesWithDep = () => {
+  const [title, setTitle] = useState("default title");
+  const titleRef = useRef();
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    console.log("useEffect");
+    document.title = title;
+  }, [title]);
+
+  console.log("render");
+
+  const handleClick = () => setTitle(titleRef.current.value);
+  const handleCheckboxChange = () => setDarkMode((prev) => !prev);
+
+  return (
+    <div className={darkMode ? "view dark-mode" : "view"}>
+      <label htmlFor="darkMode">dark mode</label>
+      <input
+        name="darkMode"
+        type="checkbox"
+        checked={darkMode}
+        onChange={handleCheckboxChange}
+      />
+      <input ref={titleRef} />
+      <button onClick={handleClick}>change title</button>
+    </div>
+  );
+};
+```
+
+Como ves los efectos sólo se invocan como se esperaba al pulsar el botón.
+
+![img alt](/img/react/render-good.gif)
+
+### Ejecutar el efecto solo una vez
+
+También es posible añadir un **array de dependencias vacío**. En este caso, los efectos sólo se ejecutan una vez.
+
+```jsx {5-8,10-14}
+const EffectsDemoEffectOnce = () => {
+  const [title, setTitle] = useState("default title");
+  const titleRef = useRef();
+
+  useEffect(() => {
+    console.log("useEffect title");
+    document.title = title;
+  });
+
+  useEffect(() => {
+    console.log("useEffect local storage");
+    const persistedTitle = localStorage.getItem("title");
+    setTitle(persistedTitle || []);
+  }, []);
+
+  console.log("render");
+
+  const handleClick = () => setTitle(titleRef.current.value);
+  return (
+    <div>
+      <input ref={titleRef} />
+      <button onClick={handleClick}>change title</button>
+    </div>
+  );
+};
+```
+
+Acabamos de añadir un **array vacío** como segundo argumento. Debido a esto, **el efecto sólo se ejecuta una vez después del primer renderizado** y se omite para los siguientes ciclos de renderizado.
+
+![img alt](/img/react/only-once.gif)
+
+**El array de dependencias dice**: "Ejecuta el efecto proporcionado por el primer argumento después del siguiente ciclo de renderizado **siempre que uno de los argumentos cambie**". Sin embargo, **no tenemos ningún argumento**, por lo que las dependencias nunca cambiarán en el futuro.
+
+### ¿Qué elementos deben incluirse en el array de dependencias?
+
+Según la documentación de React, hay que incluir **todos los valores del ámbito del componente que cambian sus valores entre las repeticiones**.
+
+Todos los valores externos referenciados dentro de la función callback useEffect, como props, variables de estado o variables de contexto, son dependencias del efecto. Los contenedores de ref (es decir, lo que se obtiene directamente de useRef() y no la propiedad actual) también son dependencias válidas. Incluso las variables locales, que se derivan de los valores mencionados, tienen que ser listadas en el array de dependencias.
+
+Así que incluso si utilizas un valor no funcional dentro del efecto, y estás bastante seguro de que este valor es poco probable que cambie, debes incluir el valor en el array de dependencias.
+
+## Utilización de cleanup functions
+
+### Desmontar el componente hijo.
+
+El siguiente código implementa un componente React que representa un contador que incrementa un número cada segundo. El componente padre renderiza el contador y permite destruirlo haciendo clic en un botón.
+
+```jsx {4-8}
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(function () {
+      setCount((prev) => prev + 1);
+    }, 1000);
+  }, []);
+
+  return <p>and the counter counts {count}</p>;
+};
+
+const EffectsDemoUnmount = () => {
+  const [unmount, setUnmount] = useState(false);
+  const renderDemo = () => !unmount && <Counter />;
+
+  return (
+    <div>
+      <button onClick={() => setUnmount(true)}>Unmount child component</button>
+      {renderDemo()}
+    </div>
+  );
+};
+```
+
+El componente hijo ha registrado un intervalo que invoca una función cada segundo. Sin embargo, el componente fue destruido sin anular el registro del intervalo. Después de destruir el componente, el intervalo sigue activo y quiere actualizar la variable de estado del componente (count), que ya no existe.
+
+![img alt](/img/react/component-error.gif)
+
+### Desmontar componente hijo y cleanup function
+
+La solución es anular el registro del intervalo justo antes de desmontarlo.
+
+Esto es posible con una **cleanup function**. Por lo tanto, hay que devolver una función de callback dentro del cuerpo de callback del efecto.
+
+```jsx {7}
+useEffect(() => {
+  const interval = setInterval(function () {
+    setCount((prev) => prev + 1);
+  }, 1000);
+  // return optional function for cleanup
+  // in this case acts like componentWillUnmount
+  return () => clearInterval(interval);
+}, []);
+```
+
+Las **cleanup functions** no sólo se invocan **antes de destruir el componente** React, también se invocan cada vez, **justo antes de la ejecución del siguiente efecto programado**.
+
+```jsx
+useEffect(() => {
+  console.log("useEffect");
+  const interval = setInterval(function () {
+    setCount(count + 1);
+  }, 1000);
+  // return optional function for cleanup
+  // in this case, this cleanup fn is called every time count changes
+  return () => {
+    console.log("cleanup");
+    clearInterval(interval);
+  };
+}, [count]);
+```
+
+![img alt](/img/react/multiple-times.gif)
